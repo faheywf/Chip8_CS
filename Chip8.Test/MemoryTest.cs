@@ -20,5 +20,19 @@ namespace Chip8.Test
 
             Assert.AreEqual(expectedByte, actualByte, $"Expected {expectedByte} found {actualByte}");
         }
+
+        [TestMethod]
+        public void VerifyMemoryBounds()
+        {
+            IMemory memory = new Memory.Memory();
+            Assert.ThrowsException<IndexOutOfRangeException>(() => memory.ReadByte(0x1000), "Chip-8 only had a 4kb address space.");
+        }
+
+        [TestMethod]
+        public void VerifyMemoryInitialization()
+        {
+            IMemory memory = new Memory.Memory();
+            Assert.AreEqual(memory.ReadByte(0x0000), 0x00);
+        }
     }
 }
